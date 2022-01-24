@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import { api } from '../utils/api';
 import Card from './Card';
 
 function Main(props) {
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setuserDescription] = React.useState('');
-  const [userAvatar, setuserAvatar] = React.useState('');
-  const [cards, setCards] = React.useState([]);
+  const [userName, setUserName] = useState('');
+  const [userDescription, setuserDescription] = useState('');
+  const [userAvatar, setuserAvatar] = useState('');
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(([user, cards]) => {
       setUserName(user.name);
@@ -25,7 +25,7 @@ function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
-          <img className="profile__avatar" src={userAvatar} alt="Фото профиля" />
+          <img className="profile__avatar" src={userAvatar} alt="Фото профиля" onClick={props.onEditAvatar} />
           <span className="profile__avatar-edit" onClick={props.onEditAvatar} />
         </div>
         <div className="profile__info">
