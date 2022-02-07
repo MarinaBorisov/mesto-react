@@ -40,8 +40,6 @@ function App() {
   }
 
   function handleAddPlaceClick() {
-    setPlaceName('');
-    setPlaceLink('');
     setIsAddPlacePopupOpen(true);
   }
 
@@ -62,6 +60,9 @@ function App() {
 
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
@@ -75,6 +76,9 @@ function App() {
     api.deleteCard(selectedCardToDelete._id).then(() => {
       setCards((state) => state.filter((c) => c._id !== selectedCardToDelete._id));
       closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
@@ -82,31 +86,31 @@ function App() {
     api.setUserInfo(userData).then(user => {
       setCurrentUser(user);
       closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
   function handleUpdateAvatar(avatar) {
     api.setUserAvatar(avatar).then((avatar) => {
       setCurrentUser(avatar);
       closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
   function handleUpdatePlace(newCard) {
     api.createCard(newCard).then((newCard) => {
       setCards([newCard, ...cards]);
       closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
-  const [placeName, setPlaceName] = React.useState('');
-  const [placeLink, setPlaceLink] = React.useState('');
 
-  function handlePlaceNameChange(e) {
-    setPlaceName(e.target.value);
-  }
-
-  function handlePlaceLinkChange(e) {
-    setPlaceLink(e.target.value);
-  }
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
@@ -129,10 +133,6 @@ function App() {
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         onUpdatePlace={handleUpdatePlace}
-        placeName={placeName}
-        handlePlaceNameChange={handlePlaceNameChange}
-        placeLink={placeLink}
-        handlePlaceLinkChange={handlePlaceLinkChange}
       />
       <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
@@ -144,7 +144,10 @@ function App() {
         onClose={closeAllPopups}
         onSubmit={handleCardDelete}
       />
-      <ImagePopup card={selectedCardToShow} onClose={closeAllPopups} />
+      <ImagePopup 
+        card={selectedCardToShow} 
+        onClose={closeAllPopups} 
+      />
     </CurrentUserContext.Provider>
   );
 }

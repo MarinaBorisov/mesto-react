@@ -16,6 +16,7 @@ function EditAvatarPopup(props) {
     isOpen={props.isOpen}
     onClose={props.onClose}
     onSubmit={handleSubmit}
+    buttonText="Сохранить"
   >
     <input type="url"
       className="popup__field popup__field_type_avatar-link"

@@ -9,6 +9,7 @@ function PopupWithConfirm(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={props.onSubmit}
+      buttonText="Да"
     />
   );
 }

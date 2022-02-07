@@ -1,21 +1,17 @@
 import React from 'react';
+import Popup from './Popup';
 
-function PopupWithForm(props) {
+function PopupWithForm({isOpen, name, onClose, ...props}) {
   return (
-    <div className={`popup popup_type_${props.name} ${props.isOpen ? "popup_opened" : ""}`}>
-      <div className="popup__container">
-        <button type="button" className="popup__close" aria-label="Закрыть попап" onClick={props.onClose} />
+    <Popup isOpen={isOpen} name={name} onClose={onClose}>
         <h2 className="popup__title">{props.title}</h2>
-        <form className={`popup__form popup__form_type_${props.name}`} name={`popup-${props.name}`} onSubmit={props.onSubmit}>
+        <form className={`popup__form popup__form_type_${name}`} name={`popup-${name}`} onSubmit={props.onSubmit}>
           {props.children}
-          <button type="submit" className={`popup__button-save ${props.name === "confirm" && "popup__button-save_type_confirm"}`}>
-            {props.name === "place" && "Создать"}
-            {(props.name === "profile" || props.name === "avatar") && "Сохранить"}
-            {props.name === "confirm" && "Да"}
+          <button type="submit" className={`popup__button-save ${name === "confirm" && "popup__button-save_type_confirm"}`}>
+            {props.buttonText}
           </button>
         </form>
-      </div>
-    </div>
+    </Popup>
   );
 }
 
